@@ -15,8 +15,6 @@
   ];
   
   const letters = [`C`, `D`, `E`, `F`, `G`, `A`, `B`, ];
-  // const accidentals = [``, `#`, `b`, `x`, `bb`, `#x`, `bbb`];
-  // const qualities = [`dim`, `mi`, `ma`, `P`, `aug`];
   
   let chosen_root = '';
   let chosen_entity = '';
@@ -24,7 +22,7 @@
   
   let chosen_entity_intervals = [];
   $: chosen_entity_intervals = entities
-      .find(entity => entity.name === chosen_entity)?.intervals
+    .find(entity => entity.name === chosen_entity)?.intervals
   ;
   
   function removeLastChar(string) {
@@ -42,19 +40,19 @@
   
   let chosen_entity_diatonic_steps = [];
   $: chosen_entity_diatonic_steps = intervals
-      .filter(interval => chosen_entity_intervals?.includes(interval.name))
-      .map(interval => interval.steps[0])
+    .filter(interval => chosen_entity_intervals?.includes(interval.name))
+    .map(interval => interval.steps[0])
   ;
   
   let chosen_entity_half_steps = [];
   $: chosen_entity_half_steps = intervals
-      .filter(interval => chosen_entity_intervals?.includes(interval.name))
-      .map(interval => interval.steps[1])
+    .filter(interval => chosen_entity_intervals?.includes(interval.name))
+    .map(interval => interval.steps[1])
   ;
   
   let correct_root_letter = [];
   $: correct_root_letter = letters
-      .find((letter, index) => chosen_root?.includes(letter))
+    .find((letter, index) => chosen_root?.includes(letter))
   ;
   
   let correct_root_letter_index = 0
@@ -72,7 +70,7 @@
   
   let enharmonic_root = '';
   $: enharmonic_root = enharmonics
-      .find((array, index) => array.includes(chosen_root))
+    .find((array, index) => array.includes(chosen_root))
   ;
   
   let enharmonic_root_index;
@@ -127,37 +125,39 @@
       return `${note}${adjusted_octave_displacement[i]}${chosen_entity_interval_qualities[i]}`
     }
   );
-  
 </script>
 
-<div class='toggle-box'>
-  <Toggle/>
-</div>
-
 <div class='container'>
+
+  <div class='header'>
+    <h1 class='title'><strong>Chord / Scale Builder</strong></h1>
+    <div class='toggle-box'>
+      <Toggle/>
+    </div>
+  </div>
   
-  <p class='instruction'>
-    <strong>Pick a root note</strong>
-  </p>
+  <div class='instruction'>
+    <h2><strong>Pick a root note</strong></h2>
+  </div>
   
   <div class='root-picker'>
     {#each letters as note}
       <button
-        class='note-button row-2'
+        class='note-button row-1'
         class:selected={note + '#' === chosen_root}
         on:click={() => chosen_root = note + '#'}
       >
         {note + '#'}
       </button>
       <button
-        class='note-button row-3'
+        class='note-button row-2'
         class:selected={note === chosen_root}
         on:click={() => chosen_root = note}
       >
         {note}
       </button>
       <button
-        class='note-button row-4'
+        class='note-button row-3'
         class:selected={note + 'b' === chosen_root}
         on:click={() => chosen_root = note + 'b'}
       >
@@ -166,11 +166,9 @@
     {/each}
   </div>
   
-<!-- 	<hr/> -->
-  
-  <p class='instruction'>
-    <strong>Pick a musical entity</strong>
-  </p>
+  <div class='instruction'>
+    <h2><strong>Pick a musical entity</strong></h2>
+  </div>
   
   <div class='entity-picker'>
     {#each chords as chord, i}
@@ -193,25 +191,9 @@
     {/each}
   </div>
   
-<!-- 	<div class='state'>
-    <p>Chosen Root: {chosen_root}</p>
-    <p>Chosen Entity: {chosen_entity}</p>
-    <p>Correct Root Letter: {correct_root_letter}</p>
-    <p>Correct Root Letter Index: {correct_root_letter_index}</p>
-    <p>Chosen Entity Intervals: {chosen_entity_intervals}</p>
-    <p>Chosen Entity Diatonic Steps: {chosen_entity_diatonic_steps}</p>
-    <p>Adusted Entity Diatonic Steps: {adjusted_diatonic_steps}</p>
-    <p>Chosen Entity Half Steps: {chosen_entity_half_steps}</p>
-    <p>Adusted Entity Half Steps: {adjusted_half_steps}</p>
-    <p>Correct Letter Names: {correct_letter_names}</p>
-    <p>Correct Enharmonic Note Name Arrays: {correct_enharmonic_note_name_arrays}</p>
-  </div> -->
-  
-<!-- 	<hr/> -->
-  
-  <p class='instruction'>
-    <strong>Result</strong> <span>{chosen_root} {chosen_entity}</span>
-  </p>
+  <div class='instruction'>
+    <h2><strong>Result</strong> <span>{chosen_root} {chosen_entity}</span></h2>
+  </div>
   
   <div class='selection-result'>
     <div class='result-notes'>
@@ -235,69 +217,45 @@
 </div>
 
 <style>
-  button {
-    background-color: var(--bg-color);
-    border-radius: 4px;
-    margin: 0;
-    padding: 0;
-    font-size: 12px;
-    color: var(--text-color);
-    border: 1px solid var(--border);
-  }
-  
-  p {
-    margin: 0;
-    padding: 0;
-    line-height: 1;
-    font-size: 14px;
-  }
-  
   span {
     margin-left: 0.5rem;
     min-width: 4rem;
     font-weight: 400;
   }
   
-/* 	hr {
-    grid-column: 1/3;
-    width: 100%;
-    border: 0;
-    height: 1px;
-    background: #333;
-    background-image: linear-gradient(to right, #ccc, #333, #ccc);
-  } */
-
   .container {
-    margin: 0;
     padding: 1rem;
     display: grid;
-    grid-template-columns: repeat(2, fit-content);
+    grid-auto-flow: row;
+    grid-template-columns: 1fr;
     background-color: var(--bg-color-2);
     border: 1px solid var(--border);
     border-radius: 12px;
-    gap: 1rem;
+    gap: 1.25rem;
+  }
+
+  .header {
+    display: grid;
+    grid-template-columns: 1fr fit-content;
+    grid-auto-flow: column;
+    align-items: center;
+  }
+
+  .title {
+    justify-self: start;
+  }
+
+  .toggle-box {
+    justify-self: end;
   }
   
   .state {
-    grid-column: 1/3;
     display: grid;
     row-gap: 0.5rem;
   }
-  
-  .instruction {
-    grid-column: 1/2;
-    align-self: center;
-  }
-  
+
   .root-picker {
-    grid-column: 1/3;
-    margin: 0;
-    padding: 0;
-/* 		width: fit-content; */
-/* 		height: fit-content; */
     display: grid;
-/* 		grid-auto-flow: column; */
-/* 		grid-template-rows: repeat(3, fit-content); */
     grid-template-columns: repeat(7, 1fr);
     gap: 0.25rem;
   }
@@ -308,9 +266,6 @@
   }
   
   .entity-picker {
-    grid-column: 1/3;
-    margin: 0;
-    padding: 0;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 0.25rem;
@@ -325,10 +280,6 @@
     color: var(--bg-color);
     background-color: var(--text-color);
     border: 1px solid black;
-  }
-  
-  .selection-result {
-    grid-column: 1/3;
   }
   
   .result-notes {
@@ -359,28 +310,24 @@
     width: 4rem;
     border-radius: 4px;
     justify-self: end;
+    background-color: var(--bg-color-2);
+  }
+
+  .reset-button:active {
+    color: var(--bg-color);
+    background-color: var(--text-color);
   }
   
-  .row-1 {grid-row: 1 / 2; grid-column: 1 / 8;}
+  .row-1 {grid-row: 1 / 2;}
   .row-2 {grid-row: 2 / 3;}
   .row-3 {grid-row: 3 / 4;}
-  .row-4 {grid-row: 4 / 5;}
   
   .keyboard-box {
     margin: 0;
     padding: 0;
     border: 1px solid black;
     border-radius: 10px;
-    grid-column: 1/3;
     overflow-x: hidden;
     transform: translateZ(0);
-  }
-  
-  .toggle-box {
-    position: fixed;
-    top: 0;
-    right: 0;
-    margin: 1rem;
-    padding: 0;
   }
 </style>
