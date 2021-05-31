@@ -1,17 +1,8 @@
 <script>
-	import Keys from './Keys.svelte'
+  import Keys from './Keys.svelte'
   import { writable } from 'svelte/store'
   import { onMount } from 'svelte'
   import { messageType, getMIDINoteName, getMIDINoteFrequency } from './MIDI.js';
-
-//   import { index, trackList } from '../audio/stores'
-//   import Play from '../audio/Play.svelte'
-
-//   export let title = '';
-//   export let artist = 'RYKR';
-//   export let artwork = '/images/rykr-placeholder.svg';
-//   export let alt = 'RYKR Logo.';
-//   export let file = '';
 
   export let top = false;
 

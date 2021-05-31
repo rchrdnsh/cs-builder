@@ -15,7 +15,7 @@ export const scales = [
 //     name: `Dorian Mode`,
 //     intervals: [`root`,`ma2`,`mi3`,`P4`,`P5`,`ma6`,`mi7`]
 //   },
-	{
+  {
     name: `Minor Scale`,
     intervals: [`root`,`ma2`,`mi3`,`P4`,`P5`,`mi6`,`mi7`]
   },

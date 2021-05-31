@@ -24,51 +24,6 @@
 
   export let markers = false;
 
-  // let zonesArray = [
-  //   {
-  //     number: 1,
-  //     keys: [
-  //       {
-  //         color: `white`,
-  //         names: [
-  //           {id: 1, name: [`C`, `B#`, `Dbb`]},
-  //           {id: 2, name: [`D`, `Cx`, `Ebb`]},
-  //           {id: 3, name: [`E`, `Dx`, `Fb`]}
-  //         ]
-  //       },
-  //       {
-  //         color: `black`,
-  //         names: [
-  //           {id: 1, name: [`C#`, `Db`]},
-  //           {id: 2, name: [`D#`, `Eb`]}
-  //         ]
-  //       }
-  //     ]
-  //   },
-  //   {
-  //     number: 2,
-  //     keys: [
-  //       {
-  //         color: `white`,
-  //         names: [
-  //           {id: 1, name: [`F`, `E#`, `Gbb`]},
-  //           {id: 2, name: [`G`, `Fx`, `Abb`]},
-  //           {id: 3, name: [`A`, `Gx`, `Bbb`]},
-  //           {id: 4, name: [`B`, `Ax`, `Cb`]}
-  //         ]
-  //       },
-  //       {
-  //         color: `black`,
-  //         names: [
-  //           {id: 1, name: [`F#`, `Gb`, `Ex`]},
-  //           {id: 2, name: [`G#`, `Ab`]},
-  //           {id: 3, name: [`A#`, `Bb`, `Cbb`]}
-  //         ]
-  //       }
-  //     ]
-  //   }
-  // ];
-
   let zone1 = [
     {
       color: `white`,

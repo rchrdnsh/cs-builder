@@ -1,6 +1,6 @@
 export const intervals = [
   { name: `root`, steps: [0, 0] },
-	
+  
   { name: `dim2`, steps: [1, 0] },
   { name: `mi2`, steps: [1, 1] },
   { name: `ma2`, steps: [1, 2] },
