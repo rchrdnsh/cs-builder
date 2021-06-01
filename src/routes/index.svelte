@@ -15,15 +15,18 @@
   ];
   
   const letters = [`C`, `D`, `E`, `F`, `G`, `A`, `B`, ];
+  const accidentals = [``, `#`, `b`, `x`, `bb`, `#x`, `bbb`];
+  const qualities = [`dim`, `mi`, `ma`, `P`, `aug`];
   
   let chosen_root = '';
   let chosen_entity = '';
   let octave = 3;
   
   let chosen_entity_intervals = [];
-  $: chosen_entity_intervals = entities
-    .find(entity => entity.name === chosen_entity)?.intervals
-  ;
+  $: chosen_entity_intervals = entities.find(
+    entity => entity.name === chosen_entity
+  )?.intervals;
+	// $: console.log(chosen_entity_intervals);
   
   function removeLastChar(string) {
     if (string === 'root') {
@@ -37,73 +40,88 @@
   $: chosen_entity_interval_qualities = chosen_entity_intervals?.map(
     interval => removeLastChar(interval)
   );
+	// $: console.log(chosen_entity_interval_qualities);
   
   let chosen_entity_diatonic_steps = [];
-  $: chosen_entity_diatonic_steps = intervals
-    .filter(interval => chosen_entity_intervals?.includes(interval.name))
-    .map(interval => interval.steps[0])
-  ;
+  $: chosen_entity_diatonic_steps = chosen_entity_intervals?.map(
+    interval => intervals.find(i => i.name === interval).steps[0]
+  );
+	// $: console.log(chosen_entity_diatonic_steps);
   
   let chosen_entity_half_steps = [];
-  $: chosen_entity_half_steps = intervals
-    .filter(interval => chosen_entity_intervals?.includes(interval.name))
-    .map(interval => interval.steps[1])
-  ;
+    $: chosen_entity_half_steps = chosen_entity_intervals?.map(
+    interval => intervals.find(i => i.name === interval).steps[1]
+  );
+	// $: console.log(chosen_entity_half_steps);
   
   let correct_root_letter = [];
-  $: correct_root_letter = letters
-    .find((letter, index) => chosen_root?.includes(letter))
-  ;
+  $: correct_root_letter = letters.find(
+    (letter, index) => chosen_root?.includes(letter)
+  );
+	// $: console.log(correct_root_letter);
   
   let correct_root_letter_index = 0
   $: correct_root_letter_index = letters.indexOf(correct_root_letter);
+  // $: console.log(correct_root_letter_index);
   
   let adjusted_diatonic_steps = []
-  $: adjusted_diatonic_steps = chosen_entity_diatonic_steps
-    .map(step => {
+  $: adjusted_diatonic_steps = chosen_entity_diatonic_steps?.map(
+    step => {
       if (step + correct_root_letter_index > 6) {
         return step + correct_root_letter_index - 7
       } else {
         return step + correct_root_letter_index
       }
-  });
+    }
+  );
+	// $: console.log(adjusted_diatonic_steps);
   
   let enharmonic_root = '';
-  $: enharmonic_root = enharmonics
-    .find((array, index) => array.includes(chosen_root))
-  ;
+  $: enharmonic_root = enharmonics.find(
+    (array, index) => array.includes(chosen_root)
+  );
+	// $: console.log(enharmonic_root);
   
   let enharmonic_root_index;
   $: enharmonic_root_index = enharmonics.indexOf(enharmonic_root);
+	// $: console.log(enharmonic_root_index);
   
   let adjusted_half_steps = []; 
-  $: adjusted_half_steps = chosen_entity_half_steps
-      .map(step => {
-        if (step + enharmonic_root_index > 11) {
-          return step + enharmonic_root_index - 12
-        } else {
-          return step + enharmonic_root_index
-        };
-  });
+  $: adjusted_half_steps = chosen_entity_half_steps?.map(
+    step => {
+      if (step + enharmonic_root_index > 11) {
+        return step + enharmonic_root_index - 12
+      } else {
+        return step + enharmonic_root_index
+      };
+    }
+  );
+	// $: console.log(adjusted_half_steps);
   
-  $: adjusted_octaves = chosen_entity_half_steps
-    .map(step => step + enharmonic_root_index);
+  $: adjusted_octaves = chosen_entity_half_steps?.map(step => step + enharmonic_root_index);
+	// $: console.log(adjusted_octaves);
   
   let adjusted_octave_displacement = [];
-  $: adjusted_octave_displacement = adjusted_octaves
-    .map(step => {
-      if (step >= 12) {
+  $: adjusted_octave_displacement = adjusted_octaves?.map(
+    (step, index) => {
+      if (step >= 12 && adjusted_octaves[index] < adjusted_octaves[index - 1]) {
+        return octave + 2
+      } else if (step >= 12 || adjusted_octaves[index] < adjusted_octaves[index - 1]) {
         return octave + 1
       } else {
         return octave
       }
-  });
+    }
+  );
+	// $: console.log(adjusted_octave_displacement);
   
   let correct_letter_names = [];
-  $: correct_letter_names = adjusted_diatonic_steps.map(i => letters[i]);
+  $: correct_letter_names = adjusted_diatonic_steps?.map(i => letters[i]);
+	// $: console.log(correct_letter_names);
   
   let correct_enharmonic_note_name_arrays = [];
-  $: correct_enharmonic_note_name_arrays = adjusted_half_steps.map(i => enharmonics[i]);
+  $: correct_enharmonic_note_name_arrays = adjusted_half_steps?.map(i => enharmonics[i]);
+	// $: console.log(correct_enharmonic_note_name_arrays);
   
   let result = [];
   $: {
@@ -118,6 +136,7 @@
       }
     }
   };
+	// $: console.log(result);
   
   let result_with_qualities = []
   $: result_with_qualities = result?.map(
@@ -125,6 +144,7 @@
       return `${note}${adjusted_octave_displacement[i]}${chosen_entity_interval_qualities[i]}`
     }
   );
+	// $: console.log(result_with_qualities)
 </script>
 
 <div class='container'>
