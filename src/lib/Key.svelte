@@ -29,6 +29,7 @@
 
   let numbersArray = [`1st`, `2nd`, `3rd`, `4th`, `5th`, `6th`, `7th`, `8th`];
   let qualitiesArray = ['', 'aug', 'P', 'ma', 'mi', 'dim'];
+	let num = [0, 1, 2, 3];
 </script>
 
 <div
@@ -46,34 +47,36 @@
 
   class:focus-mode={focusMode === true}
 
-  class:black-key-name={color === `black` && ([0,1,2].map(i => `${name[0]}${octave}-${name[1]}${octave}`).some(s => notes.includes(s)))}
+  class:black-key-name='{
+		 color === `black` && (num.map(i => `${name[0]}${octave}-${name[1]}${octave}`).some(s => notes.includes(s)))
+	}'
 
-  class:augmented-key-overlay={[0,1,2].map(i => `${name[i]}${octave}aug`).some(s => overlay.includes(s))}
-  class:perfect-key-overlay={[0,1,2].map(i => `${name[i]}${octave}P`).some(s => overlay.includes(s))}
-  class:major-key-overlay={[0,1,2].map(i => `${name[i]}${octave}ma`).some(s => overlay.includes(s))}
-  class:augmented-key={[0,1,2].map(i => `${name[i]}${octave}aug`).some(s => notes.includes(s))}
-  class:minor-key-overlay={[0,1,2].map(i => `${name[i]}${octave}mi`).some(s => overlay.includes(s))}
-  class:diminished-key-overlay={[0,1,2].map(i => `${name[i]}${octave}dim`).some(s => overlay.includes(s))}
+  class:augmented-key-overlay='{num.map(i => `${name[i]}${octave}aug`).some(s => overlay.includes(s))}'
+  class:perfect-key-overlay='{num.map(i => `${name[i]}${octave}P`).some(s => overlay.includes(s))}'
+  class:major-key-overlay='{num.map(i => `${name[i]}${octave}ma`).some(s => overlay.includes(s))}'
+  class:augmented-key='{num.map(i => `${name[i]}${octave}aug`).some(s => notes.includes(s))}'
+  class:minor-key-overlay='{num.map(i => `${name[i]}${octave}mi`).some(s => overlay.includes(s))}'
+  class:diminished-key-overlay='{num.map(i => `${name[i]}${octave}dim`).some(s => overlay.includes(s))}'
 
-  class:note-name={[0,1,2].map(i => `${name[i]}${octave}`).some(s => notes.includes(s))}
-  class:ghost-name={[0,1,2].map(i => `${name[i]}${octave}-bg`).some(s => notes.includes(s))}
-  class:perfect-key={[0,1,2].map(i => `${name[i]}${octave}P`).some(s => notes.includes(s))}
-  class:perfect-key-double={[0,1,2].map(i => `${name[0]}${octave}P-${name[1]}${octave}P`).some(s => notes.includes(s))}
-  class:major-key={[0,1,2].map(i => `${name[i]}${octave}ma`).some(s => notes.includes(s))}
-  class:minor-key={[0,1,2].map(i => `${name[i]}${octave}mi`).some(s => notes.includes(s))}
-  class:diminished-key={[0,1,2].map(i => `${name[i]}${octave}dim`).some(s => notes.includes(s))}
-  class:dim-aug-key={notes.includes(`${name[0]}${octave}aug-${name[1]}${octave}dim`)}
+  class:note-name='{num.map(i => `${name[i]}${octave}`).some(s => notes.includes(s))}'
+  class:ghost-name='{num.map(i => `${name[i]}${octave}-bg`).some(s => notes.includes(s))}'
+  class:perfect-key='{num.map(i => `${name[i]}${octave}P`).some(s => notes.includes(s))}'
+  class:perfect-key-double='{num.map(i => `${name[0]}${octave}P-${name[1]}${octave}P`).some(s => notes.includes(s))}'
+  class:major-key='{num.map(i => `${name[i]}${octave}ma`).some(s => notes.includes(s))}'
+  class:minor-key='{num.map(i => `${name[i]}${octave}mi`).some(s => notes.includes(s))}'
+  class:diminished-key='{num.map(i => `${name[i]}${octave}dim`).some(s => notes.includes(s))}'
+  class:dim-aug-key='{notes.includes(`${name[0]}${octave}aug-${name[1]}${octave}dim`)}'
 
-  class:played-key={
+  class:played-key='{
     MIDINotes.includes(`${name[0]}${octave}`) ||
     MIDINotes.includes(`${name[0]}${octave}/${name[1]}${octave}`)
-  }
+  }'
   
-  class:correct={
+  class:correct='{
     (currentHighlight === 'correct' && MIDINotes.includes(`${name[0]}${octave}`)) ||
     (currentHighlight === 'correct' && MIDINotes.includes(`${name[0]}${octave}/${name[1]}${octave}`)) ||
     ((current === `${name[0]}${octave}`) && (clicked === true))
-  }
+  }'
   class:incorrect={
     (currentHighlight === 'incorrect' && MIDINotes.includes(`${name[0]}${octave}`)) ||
     (currentHighlight === 'incorrect' && MIDINotes.includes(`${name[0]}${octave}/${name[1]}${octave}`)) ||
@@ -106,32 +109,35 @@
   }
 
   on:click={() => classList=[...classList, shore]}
-  class='{classList.join(` `)}'
-  on:mousedown={() => clicked = true}
-  on:mousedown={() => current = `${name[0]}${octave}`}
-  on:mouseup={() => clicked = false}
-  on:mouseup={() => current = ``}
->
-{#if MIDINotes.includes(`${name[0]}${octave}`) || MIDINotes.includes(`${name[0]}${octave}/${name[1]}${octave}`)}
-  {#if color === `black`}
-    <div class='stack'>
-      <p>{name[0]}</p>
-      <p>{name[1]}</p>
-    </div>
-  {:else}
-    <p
-      class:tiny-white-p={color === 'white' && tiny === true}
-      class:small-white-p={color === 'white' && small === true}
-    >
+		class='{classList.join(` `)}'
+		on:mousedown={() => clicked = true}
+		on:mousedown={() => current = `${name[0]}${octave}`}
+		on:mouseup={() => clicked = false}
+		on:mouseup={() => current = ``}
+	>
+	{#if MIDINotes.includes(`${name[0]}${octave}`) || MIDINotes.includes(`${name[0]}${octave}/${name[1]}${octave}`)}
+		{#if color === `black`}
+			<div class='stack'>
+				<p>{name[0]}</p>
+				<p>{name[1]}</p>
+			</div>
+		{:else}
+			<p
+				class:tiny-white-p={color === 'white' && tiny === true}
+				class:small-white-p={color === 'white' && small === true}
+			>
       {name[0]}
     </p>
   {/if}
+	
 {:else if qualitiesArray.map(s => `${name[0]}${octave}${s}`).some(s => notes.includes(s))}
   <p class:tiny-white-p={color === 'white' && tiny === true}>{name[0]}</p>
 {:else if qualitiesArray.map(s => `${name[1]}${octave}${s}`).some(s => notes.includes(s))}
   <p class:tiny-white-p={color === 'white' && tiny === true}>{name[1]}</p>
 {:else if qualitiesArray.map(s => `${name[2]}${octave}${s}`).some(s => notes.includes(s))}
   <p class:tiny-white-p={color === 'white' && tiny === true}>{name[2]}</p>
+{:else if qualitiesArray.map(s => `${name[3]}${octave}${s}`).some(s => notes.includes(s))}
+  <p class:tiny-white-p={color === 'white' && tiny === true}>{name[3]}</p>
 {:else if qualitiesArray.map(s => `${name[0]}${octave}${s}-${name[1]}${octave}${s}`).some(s => notes.includes(s))}
   {#if color === `black`}
     <div class='stack'>
@@ -271,10 +277,10 @@
 
   @media (orientation: landscape) {
     .white-key > p {
-      font-size: 32px;
+      font-size: 24px;
     }
     .tiny-white-p {
-      font-size: 20px !important;
+      font-size: 16px !important;
     }
   }
 
@@ -299,7 +305,7 @@
   }
 
   .small-white-p {
-    font-size: 24px;
+    font-size: 20px;
   }
 
   .white-key > .stack {
@@ -562,16 +568,6 @@
     /* transition: all 250ms ease; */
   }
 
-  .octave-number {
-    margin: 0;
-    font-family: 'Share Tech', 'Odachi', 'Avenir Next Condensed';
-    color: #ccc;
-    grid-row: 1 / 2;
-    grid-column: 1 / 2;
-    z-index: 0;
-    /* transition: all 250ms ease; */
-  }
-
   .played-key {
     color: white;
     text-shadow: 0px 0px 4px black;
@@ -658,13 +654,12 @@
   }
 
   .octave-number {
-    margin: 0;
     font-family: var(--subtitle-font);
     color: #ccc;
     grid-row: 1 / 2;
     grid-column: 1 / 2;
     z-index: 0;
-    transition: all 250ms ease;
+/*     transition: all 250ms ease; */
   }
 
   @media(orientation: portrait) {
@@ -676,7 +671,7 @@
 
   @media(orientation: landscape) {
     .octave-number {
-      font-size: 18px;
+      font-size: 12px;
       padding: 0 0 0.5rem 0;
     }
   }

@@ -48,7 +48,7 @@ export const chords = [
     intervals: [`root`, `ma3`, `P5`, `mi7`, `aug2`]
   },
   {
-    name: `Dominant 7(#9,#5)`,
+    name: `Dominant 7(#9#5)`,
     intervals: [`root`, `ma3`, `aug5`, `mi7`, `aug2`]
   },
 ];

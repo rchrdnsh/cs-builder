@@ -1,5 +1,6 @@
 <script>
   import Key from './Key.svelte';
+	import { enharmonics } from '$lib/data/enharmonics.js'
 
   export let octaves = [];
   export let zones = [];
@@ -28,16 +29,16 @@
     {
       color: `white`,
       names: [
-        {id: 1, name: [`C`, `B#`, `Dbb`]},
-        {id: 2, name: [`D`, `Cx`, `Ebb`]},
-        {id: 3, name: [`E`, `Dx`, `Fb`]}
+        {id: 1, name: enharmonics[0]},
+        {id: 2, name: enharmonics[2]},
+        {id: 3, name: enharmonics[4]}
       ]
     },
     {
       color: `black`,
       names: [
-        {id: 1, name: [`C#`, `Db`]},
-        {id: 2, name: [`D#`, `Eb`]}
+        {id: 1, name: enharmonics[1]},
+        {id: 2, name: enharmonics[3]}
       ]
     }
   ];
@@ -46,18 +47,18 @@
     {
       color: `white`,
       names: [
-        {id: 1, name: [`F`, `E#`, `Gbb`]},
-        {id: 2, name: [`G`, `Fx`, `Abb`]},
-        {id: 3, name: [`A`, `Gx`, `Bbb`]},
-        {id: 4, name: [`B`, `Ax`, `Cb`]}
+        {id: 1, name: enharmonics[5]},
+        {id: 2, name: enharmonics[7]},
+        {id: 3, name: enharmonics[9]},
+        {id: 4, name: enharmonics[11]}
       ]
     },
     {
       color: `black`,
       names: [
-        {id: 1, name: [`F#`, `Gb`, `Ex`]},
-        {id: 2, name: [`G#`, `Ab`]},
-        {id: 3, name: [`A#`, `Bb`, `Cbb`]}
+        {id: 1, name: enharmonics[6]},
+        {id: 2, name: enharmonics[8]},
+        {id: 3, name: enharmonics[10]}
       ]
     }
   ];
